@@ -1,0 +1,12 @@
+<%- include('template/head')%>
+       <form class="formulario" action="/reg" method="post">
+         <header>Registro</header>
+         <label for="">Ingresa tu nombre de usuario</label>
+         <input class="inputs" type="text" name="username" >
+         <label for="">Ingresa tu  correo</label>
+         <input class="inputs" type="email" name="correo">
+         <label for="">Ingresa una contraseña</label>
+         <input class="inputs" type="password" name="password">
+         <input type="submit" value="registrase">
+       </form>
+<%- include('template/footer')%>
