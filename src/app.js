@@ -1,10 +1,14 @@
 const express =require('express');
 const session=require('express-session');
+const fileUpload = require('express-fileupload');
+
 const path = require("path");
 const { send } = require('process');
 const {queryPromise1}=require('./data/conectionDB.js');
 const app=express();
 
+
+app.use(fileUpload());
 app.use(session({
 	secret: 'secret',
 	resave: true,
@@ -47,6 +51,7 @@ app.post('/auth',async (req,res)=>{
         if(result.length > 0){
           req.session.loggin=true;
           req.session.email=result[0].correo;
+          req.session.idAccount=result[0].id;
           res.redirect('/home');
         }else{
          req.session.message="your user and password aren't incorrect";
@@ -84,15 +89,40 @@ app.post('/reg',async (req,res)=>{
 })
 
 //user home
-app.get('/home',(req,res)=>{
-     if(req.session.loggin){
-        res.render('welcome',{user: req.session.email})
-     }else{
-        res.redirect('/');
-     }
+app.get('/home',async (req,res)=>{
+      if(req.session.loggin){
+        res.render('welcome',{title:"home"})
+      }else{
+         res.redirect('/');
+      }
 })
 
 
+//about collections
+app.get("/colect",async (req,res)=>{
+    if(req.session.loggin){
+        try {
+            let sql="select * from  user where account="+req.session.idAccount;
+            const result=await queryPromise1(sql);
+    
+            let sql2="select * from collections  where users="+result[0].id;
+            const colec=await queryPromise1(sql2);
+
+            console.log(result);
+            console.log(colec);
+           
+            res.render("collections",{title:"collections",user:result[0],collection:colec})
+         } catch (error) {
+            console.log(error);
+         }
+         
+    }else{
+        res.redirect("/");
+    }
+})
+
+
+//save my collection
 app.get("/logout",(req,res)=>{
     if(req.session.loggin){
        req.session.destroy();

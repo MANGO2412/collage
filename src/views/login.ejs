@@ -1,13 +1,16 @@
 <%- include('template/head')%>
-     <% if(mess){ %>
-        <h1><%=mess%></h1>
-    <%}%>
-    <form class="formulario" action="/auth" method="post">
-        <header>Iniciar sesion</header>
-        <label for="correo">Escribe tu correo</label>
-        <input class="inputs" type="mail" name="correo">
-        <label for="">Escribe una contraseña</label>
-        <input class="inputs" type="password" name="password">
-        <input type="submit" name="iniciar sesion">
-    </form>
+    <%- include('template/menu',{type:""})%>
+    <div id="content-wrap">
+        <% if(mess){ %>
+            <h1><%=mess%></h1>
+        <%}%>
+        <form class="formulario" action="/auth" method="post">
+            <header>Iniciar sesion</header>
+            <label for="correo">Escribe tu correo</label>
+            <input class="inputs" type="mail" name="correo">
+            <label for="">Escribe una contraseña</label>
+            <input class="inputs" type="password" name="password">
+            <input type="submit" name="iniciar sesion">
+        </form>
+    </div>
 <%- include('template/footer')%>

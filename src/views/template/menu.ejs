@@ -1,0 +1,26 @@
+<% if(type == "index") {%>
+   <nav class="menu">
+       <h1 class="head"><a href="/">Collage</a></h1>
+       <ul>
+         <li><a href="/login">iniciar sesion</a></li>
+         <li><a href="/register">registarse</a></li>
+       </ul>
+   </nav>
+<%}else if(type=="home"){%>
+    <nav class="colorMenu menu">
+        <h1 class="head"><a href="/">Collage</a></h1>
+        <ul>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/colect">Mis collecciones</a></li>
+          <li><a href="/logout">cerrar sesion</a></li>
+        </ul>
+    </nav>
+<%}else{%>  
+   <nav class="colorMenu menu">
+       <h1 class="head"><a href="/">Collage</a></h1>
+       <ul>
+         <li><a href="/login">iniciar sesion</a></li>
+         <li><a href="/register">registarse</a></li>
+       </ul>
+   </nav>
+<%}%>

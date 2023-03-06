@@ -1,13 +1,26 @@
 <%- include('template/headUser')%>
- <h1>welcome <%= user%></h1>
+  <%- include('template/menu',{type:"home"})%>
  <div class="img">
     <form action="">
-        <input type="search" placeholder="Escribe un tema...">
-        <input type="submit" value="buscar">
+        <input id="look" type="search" placeholder="Escribe un tema...">
+        <input id="btn" type="submit" value="buscar">
     </form>
  </div>
  <div class="container">
     <!-- muestra las imagens -->
     <div class="media"></div>
  </div>
-<%- include('template/footerUser')%>
+ <div class="showImage hid">
+   <div class="controls">
+      <button class="save">Editar</button>
+      <button class="downl">Descargar</button>
+      <button class="close">cerrar</button>
+   </div>
+   <div class="infoImage">
+      <header id="title"></header>
+      <p id="user"></p>
+      <img class="picture" src="" alt="" srcset="">
+   </div>
+ </div>
+ <script type="module" src="javaScript/main.mjs"></script>
+<%- include('template/footer')%>

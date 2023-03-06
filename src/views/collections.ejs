@@ -1,0 +1,22 @@
+<%- include('template/headUser')%>
+  <%- include('template/menu',{type:"home"})%>
+   <div class="contener">
+     <!-- cuenta del suario -->
+     <div>
+       <!-- nombre del uusario -->
+       <h2><%=user.username%></h2>
+       <!-- para cambiar la informacion -->
+       <button>cambiar informacion</button>
+     </div>
+     <!-- collecciones -->
+     <%if(collection){%>
+      <div>
+         <p>si tienes colecciones</p>
+      </div>
+     <%}else{%>
+       <div>
+         <p>no tienes colecciones</p>
+       </div>
+      <%}%>
+   </div>
+  <%- include('template/footer')%>
