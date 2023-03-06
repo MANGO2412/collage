@@ -126,8 +126,9 @@ app.get("/colect",async (req,res)=>{
 app.get("/logout",(req,res)=>{
     if(req.session.loggin){
        req.session.destroy();
-       res.redirect('/')
     }
+    res.redirect('/home');
+    res.end();
 })
 module.exports=app;
 
