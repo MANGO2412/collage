@@ -15,6 +15,10 @@ const get=(url,apiKey=null)=>{
 
 //function to search all images
 const search=(value,contener,method)=>{
+       let reload=document.querySelector(".load");
+       reload.classList.remove("hid");
+       contener.classList.add("hid");
+
       contener.innerHTML="";
       let url="https://api.pexels.com/v1/search?query="+value;
       get(url,'n9rsRPJxQg2ehBgJHHhY5MlE6hhm89LUYMX6wJOHe3vnAeQ8EiQJDiTl')
@@ -27,6 +31,11 @@ const search=(value,contener,method)=>{
                 `;
               });
               method();   
+        })
+        .catch(error =>{console.error("error: ",error)})
+        .finally(()=>{
+          reload.classList.add("hid");
+          contener.classList.remove("hid");
         })
 }
 

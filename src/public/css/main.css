@@ -9,10 +9,11 @@
     background-color: #212121;
 }
 .menuImg{
-    background-image:  url('../img/pexels-photo-1367192.jpeg');
-    background-attachment: scroll;
+    background-image:  url('../img/pexels-robert-lozano-12631100.jpg');
+    /* background-attachment: scroll; */
+
     background-size: cover;
-    height: 100vh;
+    height: 90vh;
 }
 
 .eslogan{
@@ -23,12 +24,12 @@
 
 .eslogan h1{
     font-size: 34px;
+    color: #FFFFFF;
 }
 
 .eslogan p{
-    font-size: 20px;
+    font-size: 25px;
     color: #757575;
-    text-shadow: 1px 1px 2px black, 0 0 1em rgb(137, 137, 146), 0 0 0.2em rgb(191, 191, 204);
 }
 
 .menu{
@@ -47,7 +48,7 @@
 }
 .menu ul li a{
     color: #FFFFFF;
-    font-size: 20px;
+    font-size: 30px;
     text-decoration: none;
 
     font-family: 'Noto Serif', serif;
@@ -72,35 +73,52 @@
 
 
 /* formulario */
-.formulario{
-    margin: 30px auto;
+.log{
     width: 450px;
     height: 300px;
+}
+
+.sing{
+    width: 450px;
+    height: 400px;
+}
+
+
+.formulario{
+    margin: 70px auto;
     display: flex;
     flex-direction: column;
-    padding: 25px;
-    border-radius: 23px;
-    background-color: #9E9E9E;
+    padding: 20px;
+    border:  1px solid black;
 }
 
 .formulario header{
     text-align: center;
-    font-size: 34px;
+    font-size: 50px;
+    height: 90px;
 }
 .formulario label{
     margin-top: 10px;
 }
 
 .inputs{
-     height: 24px;
+     height: 30px;
+     border: none;
+     border-bottom: 1px solid #212121;
+     margin-bottom: 20px; 
 }
 
 .inputs:focus{
-   outline:1px solid #3F72AF;
+    outline: none;
+    padding:5px;
 }
 .formulario [type="submit"]{
-    margin-top: 10px;
+    margin-top: 20px;
     padding: 3px;
+    color: #F9F7F7;
+    background-color: #212121;
+    border: none;
+    padding: 10px;
 }
 
 
@@ -133,26 +151,22 @@
 
 
 .content-wrap{
-    margin-bottom: 30px;
+    margin-bottom: 300px;
 }
 
 
 footer{
     width: 100%;
-    height: 40vh;
     background-color:  #212121;
-    position: relative;
-    bottom: 0;
-    left: 0;
     color: #F9F7F7;
 }
 
 footer aside{
     display: flex;
     justify-content: space-around;
-    height: 190px;
+    flex-direction: row;
+    padding: 30px;
 }
-footer aside section{
-    padding: 10px;
-}
+
+
 

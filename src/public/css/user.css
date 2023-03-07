@@ -27,6 +27,7 @@
     border: none;
     color: #E9F8F9;
 }
+
   
 .container{
     width: 90%;
@@ -34,6 +35,12 @@
 }
   
 /* clase media */
+.load{
+  width: 10%;
+  height: 400px;
+  margin: 10px auto;
+}
+
 .media{
   display: grid;
   grid-template-columns: repeat(4,1fr);

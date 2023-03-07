@@ -21,7 +21,20 @@ btn.addEventListener("click",(e)=>{
                          document.querySelector(".showImage").style.background=data.avg_color;
                          document.getElementById("title").innerText=data.alt;
                          document.getElementById("user").innerText="creado por "+data.photographer;
-                         document.querySelector(".picture").src=`${data.src.original}`;
+
+                         //renderizar las imagenes
+                         document.querySelector(".picture").src="img/cargando-loading-041.gif";
+                         let img;
+                          fetch(data.src.original)
+                           .then((response)=>response.blob())
+                           .then((data)=>{
+                              img=URL.createObjectURL(data);
+                           })
+                           .catch(error =>{console.error("error: ",error)})
+                           .finally(()=>{
+                            document.querySelector(".picture").src=img;
+                           })
+
                          document.querySelector(".showImage").classList.remove("hid"); 
 
                          //function to download img
