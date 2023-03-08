@@ -93,7 +93,7 @@ app.post('/reg',async (req,res)=>{
 })
 
 //user home
-app.get('/home',async (req,res)=>{
+app.get('/home',(req,res)=>{
       if(req.session.loggin){
         res.render('welcome',{title:"home"})
       }else{
