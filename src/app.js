@@ -49,9 +49,13 @@ app.post('/auth',async (req,res)=>{
         const result = await queryPromise1(sql);
 
         if(result.length > 0){
+          let sql="select * from  user where account="+result[0].id;
+          const user=await queryPromise1(sql);
+
           req.session.loggin=true;
           req.session.email=result[0].correo;
           req.session.idAccount=result[0].id;
+          req.session.iduser=user[0].id;
           res.redirect('/home');
         }else{
          req.session.message="your user and password aren't incorrect";
@@ -108,8 +112,6 @@ app.get("/collections",async (req,res)=>{
             let sql2="select * from collections  where users="+result[0].id;
             const colec=await queryPromise1(sql2);
 
-            console.log(result);
-            console.log(colec);
            
             res.render("collections",{title:"collections",user:result[0],collection:colec})
          } catch (error) {
@@ -134,6 +136,26 @@ app.get("/collections/:idImg",(req,res)=>{
       }
 })
 
+
+app.get("/save/:img", async(req,res)=>{
+     if(req.params.img && req.session.loggin){
+      // const  client=createClient('n9rsRPJxQg2ehBgJHHhY5MlE6hhm89LUYMX6wJOHe3vnAeQ8EiQJDiTl');
+      // client.photos.show({id:req.params.img})
+      //         .then(async (photo)=>{
+      //             try {
+      //               let sql=`insert into collections(code_image,users) value("${photo.id}",${req.session.iduser})`;
+      //               const result= await queryPromise1(sql);
+      //               res.send(result.insertId);
+      //             } catch (error) {console.log(error)}
+      //         }) 
+       const  client=createClient('n9rsRPJxQg2ehBgJHHhY5MlE6hhm89LUYMX6wJOHe3vnAeQ8EiQJDiTl');
+       const result= await client.photos.show({id:req.params.img});
+        res.render(result);
+
+     }
+
+     res.end();
+})
 //save my collection
 app.get("/logout",(req,res)=>{
     if(req.session.loggin){
