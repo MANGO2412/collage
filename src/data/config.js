@@ -5,10 +5,10 @@
  let db='brslh0tpjacbn0az0tdt';
 
 
-//  let host="localhost";
-//  let user="root";
-//  let password='';
-//  let db="gallery";
+// let host="localhost";
+// let user="root";
+// let password='';
+// let db="gallery";
 
 module.exports={
    host,
