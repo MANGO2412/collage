@@ -1,22 +1,54 @@
-<%- include('template/headUser')%>
-  <%- include('template/menu',{type:"home"})%>
-   <div class="contener">
-     <!-- cuenta del suario -->
-     <div>
-       <!-- nombre del uusario -->
-       <h2><%=user.username%></h2>
-       <!-- para cambiar la informacion -->
-       <button>cambiar informacion</button>
-     </div>
-     <!-- collecciones -->
-     <%if(collection){%>
-      <div>
-         <p>si tienes colecciones</p>
-      </div>
-     <%}else{%>
-       <div>
-         <p>no tienes colecciones</p>
-       </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/user.css">
+  <title><%=title%></title>
+</head>
+<body>
+    <% if(user){%>
+        <!--muestra vista de la galeria del usuario  -->
+        <div class="contener">
+          <!-- cuenta del suario -->
+          <div>
+            <!-- nombre del uusario -->
+            <h2><%=user.username%></h2>
+            <!-- para cambiar la informacion -->
+            <button>cambiar informacion</button>
+          </div>
+          <!-- collecciones -->
+          <%if(collection){%>
+           <div>
+              <p>si tienes colecciones</p>
+           </div>
+          <%}else{%>
+            <div>
+              <p>no tienes colecciones</p>
+            </div>
+           <%}%>
+        </div>     
+    <%}else if(img){%>
+         <!-- muestra vista del la imagen seleccionada -->
+         <div class="showImage">
+            <div class="controls">
+               <button class="save"><a href="/saveImage/<%=img.id%>">Guardar</a></button>
+               <button class="downl">Descargar</button>
+               <button class="close"> <a href="/home">cerrar</a></button>
+            </div>
+             <div class="infoImage">
+                <header id="title"><%=img.alt%></header>
+                <p id="user"><%=img.photographer %></p>
+                <img class="picture" src="<%=img.src.original%>" alt="<%=img.alt%>">
+             </div>  
+          </div> 
+          <script type="module"src="../javaScript/cole.mjs"></script>    
       <%}%>
-   </div>
-  <%- include('template/footer')%>
+</body>
+</html>
+
+
+
+
+   

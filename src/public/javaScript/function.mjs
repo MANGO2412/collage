@@ -14,23 +14,22 @@ const get=(url,apiKey=null)=>{
 }
 
 //function to search all images
-const search=(value,contener,method)=>{
+const search=(value,contener)=>{
        let reload=document.querySelector(".load");
        reload.classList.remove("hid");
        contener.classList.add("hid");
 
       contener.innerHTML="";
-      let url="https://api.pexels.com/v1/search?query="+value;
+      let url="https://api.pexels.com/v1/search?query="+value+"&&per_page=30";
       get(url,'n9rsRPJxQg2ehBgJHHhY5MlE6hhm89LUYMX6wJOHe3vnAeQ8EiQJDiTl')
         .then(data=>{
             data["photos"].forEach(element => {
                 contener.innerHTML+=`
                  <div>
-                    <img id="${element.id}" class="photo" width="200" height="200" src="${element.src.original}" alt="${element.alt}"/>
+                     <a href="/collections/${element.id}"><img  class="photo" width="200" height="200" src="${element.src.original}" alt="${element.alt}"/></a> 
                  </div>
                 `;
               });
-              method();   
         })
         .catch(error =>{console.error("error: ",error)})
         .finally(()=>{
@@ -62,18 +61,8 @@ async function downloadImg(imageSrc){
 
 
 //function to save a image in my collection
-async function saveCollection(data){
-      const resonse= await fetch(window.location.href.replace('/home','/save_collections'),{
-        method: 'POST', 
-        headers: { 'Content-Type': 'application/json' }, 
-        body: JSON.stringify(data) 
-      });
-
-      let result=await resonse.text();
-      console.log(result)
-}
 
 
 
-export {get,search,getById,downloadImg,saveCollection};
+export {get,search,getById,downloadImg};
 

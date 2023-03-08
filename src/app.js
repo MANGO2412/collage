@@ -1,9 +1,9 @@
 const express =require('express');
 const session=require('express-session');
 const fileUpload = require('express-fileupload');
+const {createClient}=require('pexels');
 
 const path = require("path");
-const { send } = require('process');
 const {queryPromise1}=require('./data/conectionDB.js');
 const app=express();
 
@@ -99,7 +99,7 @@ app.get('/home',async (req,res)=>{
 
 
 //about collections
-app.get("/colect",async (req,res)=>{
+app.get("/collections",async (req,res)=>{
     if(req.session.loggin){
         try {
             let sql="select * from  user where account="+req.session.idAccount;
@@ -121,6 +121,18 @@ app.get("/colect",async (req,res)=>{
     }
 })
 
+//see image by id
+app.get("/collections/:idImg",(req,res)=>{
+      if(req.params.idImg){
+        const  client=createClient('n9rsRPJxQg2ehBgJHHhY5MlE6hhm89LUYMX6wJOHe3vnAeQ8EiQJDiTl');
+        client.photos.show({id:req.params.idImg})
+                .then(photo=>{
+                  res.render('collections',{title:"ver foto",img:photo,user:null})
+                })
+      }else{
+        res.redirect("/home");
+      }
+})
 
 //save my collection
 app.get("/logout",(req,res)=>{
