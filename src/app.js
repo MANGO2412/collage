@@ -9,9 +9,11 @@ const app=express();
 
 
 app.use(fileUpload());
+const oneDay = 1000 * 60 * 60 * 24;
 app.use(session({
 	secret: "secret",
-	resave: false,
+  cookie: { maxAge:  oneDay},
+	resave: true,
 	saveUninitialized: true
 }));
 
