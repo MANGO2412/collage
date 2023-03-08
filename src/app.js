@@ -10,7 +10,7 @@ const app=express();
 
 app.use(fileUpload());
 app.use(session({
-	secret: " ",
+	secret: "secret",
 	resave: true,
 	saveUninitialized: true
 }));
@@ -22,14 +22,6 @@ app.set("views",path.join(__dirname,'/views'));
 app.set('view engine','ejs');
 
 //my priciple routes
-app.get("/",(req,res)=>{
-    if(req.session.loggin)
-      res.redirect('/home');
-    else
-     res.render('index',{title:"Inicio"});
-    
-})
-
 app.get("/login",(req,res)=>{
     res.render('login',{title:"Iniciar sesion",mess:req.session.message})
 })
@@ -67,7 +59,14 @@ app.post('/auth',async (req,res)=>{
   }
 })
 
-
+app.get("/",(req,res)=>{
+  if(req.session.loggin){
+      res.redirect("/home");
+  }else{
+    res.render('index',{title:"Inicio"});
+  }
+ 
+})
 //start register an 
 app.post('/reg',async (req,res)=>{
     let username=req.body.username;
@@ -131,7 +130,7 @@ app.get("/collections/:idImg",(req,res)=>{
 
 
 app.get("/save/:img", async(req,res)=>{
-     if(req.params.img && req.session.loggin){
+     if(req.params.img){
        const  client=createClient('n9rsRPJxQg2ehBgJHHhY5MlE6hhm89LUYMX6wJOHe3vnAeQ8EiQJDiTl');
        const result= await client.photos.show({id:req.params.img});
        const allcollection=await queryPromise1(`select * from  collections where users=${req.session.iduser}`);
