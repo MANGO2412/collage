@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/user.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=title%></title>
+</head>
+<body>
+    <%- include('template/menu',{type:"home"})%>
+    <div class="container">
+       <!-- info del usuairo -->
+       <div class="user">
+          <h2>Hola <%=user.username%></h2>
+       </div>
+       <!-- imagenes del la galeria -->
+       <div class="media collec">
+          <%collection.forEach(function (colec){%>
+            <div>
+                <a href="/collections/<%=colec['code_image']%>">
+                    <img  class="photo" width="200" height="200" src="<%=colec.url%>" alt="" srcset="">
+                </a>
+            </div>
+          <%})%>
+       </div>
+    </div>
+    <!-- pie de pagina -->
+    <footer>
+      <aside>
+        <section>
+           <header>Redes sociales</header>
+           <ul class="social_fot">
+            <li><a href="https://discord.gg/mdakQ9GB"><img src="img/discord.png" alt=""></a></li>
+            <li><a href="https://www.facebook.com/profile.php?id=100090331650997"><img src="img/facebook.png" alt=""></a></li>
+            <li><a href="https://www.instagram.com/manuelgom3z22052003/"><img src="img/instagram.png" alt=""></a></li>
+         </ul>
+        </section>
+        <section>
+          <header>reportar algun bug del sitio web</header>
+         </section>
+      </aside>
+      <div>Derechos reservado por la api de pexels</div>
+    </footer>
+</body>
+</html>

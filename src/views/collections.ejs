@@ -7,31 +7,12 @@
   <link rel="stylesheet" href="../css/user.css">
   <title><%=title%></title>
 </head>
-<body>
-    <% if(user){%>
-        <!--muestra vista de la galeria del usuario  -->
-        <div class="contener">
-          <!-- cuenta del suario -->
-          <div>
-            <!-- nombre del uusario -->
-            <h2><%=user.username%></h2>
-            <!-- para cambiar la informacion -->
-            <button>cambiar informacion</button>
-          </div>
-          <!-- collecciones -->
-          <%if(collection){%>
-           <div>
-              <p>si tienes colecciones</p>
-           </div>
-          <%}else{%>
-            <div>
-              <p>no tienes colecciones</p>
-            </div>
-           <%}%>
-        </div>     
-    <%}else if(img){%>
-         <!-- muestra vista del la imagen seleccionada -->
-         <div class="showImage">
+<body>        
+     <!-- muestra vista del la imagen seleccionada -->
+       <div class="showImage">
+             <% if(noti){%>
+                <div><%=noti%></div>
+            <%}%>
             <div class="controls">
                <button class="save"><a href="/save/<%=img.id%>">Guardar</a></button>
                <button class="downl">Descargar</button>
@@ -44,11 +25,5 @@
              </div>  
           </div> 
           <script type="module"src="../javaScript/cole.mjs"></script>    
-      <%}%>
 </body>
 </html>
-
-
-
-
-   

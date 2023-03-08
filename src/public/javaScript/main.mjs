@@ -15,9 +15,3 @@ btn.addEventListener("click",(e)=>{
     }
   
 })
-
-
-
-document.querySelector(".close").addEventListener("click",()=>{
-    document.querySelector(".showImage").classList.add("hid");
-})

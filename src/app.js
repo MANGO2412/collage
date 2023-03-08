@@ -111,9 +111,7 @@ app.get("/collections",async (req,res)=>{
     
             let sql2="select * from collections  where users="+result[0].id;
             const colec=await queryPromise1(sql2);
-
-           
-            res.render("collections",{title:"collections",user:result[0],collection:colec})
+            res.render("galery",{title:"collections",user:result[0],collection:colec})
          } catch (error) {
             console.log(error);
          }
@@ -129,7 +127,7 @@ app.get("/collections/:idImg",(req,res)=>{
         const  client=createClient('n9rsRPJxQg2ehBgJHHhY5MlE6hhm89LUYMX6wJOHe3vnAeQ8EiQJDiTl');
         client.photos.show({id:req.params.idImg})
                 .then(photo=>{
-                  res.render('collections',{title:"ver foto",img:photo,user:null})
+                  res.render('collections',{title:"ver foto",img:photo,noti:req.session.mes})
                 })
       }else{
         res.redirect("/home");
@@ -139,19 +137,32 @@ app.get("/collections/:idImg",(req,res)=>{
 
 app.get("/save/:img", async(req,res)=>{
      if(req.params.img && req.session.loggin){
-      // const  client=createClient('n9rsRPJxQg2ehBgJHHhY5MlE6hhm89LUYMX6wJOHe3vnAeQ8EiQJDiTl');
-      // client.photos.show({id:req.params.img})
-      //         .then(async (photo)=>{
-      //             try {
-      //               let sql=`insert into collections(code_image,users) value("${photo.id}",${req.session.iduser})`;
-      //               const result= await queryPromise1(sql);
-      //               res.send(result.insertId);
-      //             } catch (error) {console.log(error)}
-      //         }) 
        const  client=createClient('n9rsRPJxQg2ehBgJHHhY5MlE6hhm89LUYMX6wJOHe3vnAeQ8EiQJDiTl');
        const result= await client.photos.show({id:req.params.img});
-        res.render(result);
+       const allcollection=await queryPromise1(`select * from  collections where users=${req.session.iduser}`);
+       let exist=false;
 
+       for (const iterator of allcollection) {
+           if(iterator["code_image"]==req.params.img){
+              exist=true;
+              break;
+           }
+       }
+       if(!exist){
+        try {
+           let sql=`insert into collections(code_image,url,users) value("${result.id}","${result.src.original}",${req.session.iduser})`;
+           const resultDB= await queryPromise1(sql);
+           req.session.mes="la imagen se aguardo exitosamente";
+           res.redirect(`/collections/${result.id}`);
+        } catch (error) {console.log(error)}
+
+       }else{
+        req.session.mes="Esta imagen, ya esta aguardad";
+        res.redirect(`/collections/${result.id}`);
+       }
+       
+     }else{
+      res.redirect("/home");
      }
 
      res.end();

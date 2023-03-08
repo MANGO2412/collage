@@ -18,7 +18,7 @@ create table user(
 create table collections(
      id integer auto_increment primary key,
      code_image varchar(50) not null,
-     file_path varchar(500) not null,
+     url varchar(500) not null,
      users  integer not null,
      foreign key(users) references user(id)
 )

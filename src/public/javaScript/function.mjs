@@ -18,7 +18,7 @@ const search=(value,contener)=>{
        let reload=document.querySelector(".load");
        reload.classList.remove("hid");
        contener.classList.add("hid");
-
+       
       contener.innerHTML="";
       let url="https://api.pexels.com/v1/search?query="+value+"&&per_page=30";
       get(url,'n9rsRPJxQg2ehBgJHHhY5MlE6hhm89LUYMX6wJOHe3vnAeQ8EiQJDiTl')
@@ -26,7 +26,7 @@ const search=(value,contener)=>{
             data["photos"].forEach(element => {
                 contener.innerHTML+=`
                  <div>
-                     <a href="/collections/${element.id}"><img  class="photo" width="200" height="200" src="${element.src.original}" alt="${element.alt}"/></a> 
+                     <a href="/collections/${element.id}"><img  class="photo envrel" width="200" height="200" src="${element.src.original}" alt="${element.alt}"/></a> 
                  </div>
                 `;
               });
@@ -35,6 +35,24 @@ const search=(value,contener)=>{
         .finally(()=>{
           reload.classList.add("hid");
           contener.classList.remove("hid");
+
+           document.querySelectorAll(".photo").forEach(element => {
+               let img=element.src;
+               let url;
+               element.src="../img/cargando-loading-041.gif";
+
+               fetch(img)
+                .then(resp=>resp.blob())
+                .then(blob=>{
+                    url=URL.createObjectURL(blob) 
+                })
+                .catch(error =>{console.error("error: ",error)})
+                .finally(()=>{
+                    element.classList.remove("envrel")
+                    element.classList.add("env")
+                    element.src=url;
+                }) 
+           });
         })
 }
 
@@ -50,7 +68,8 @@ async function downloadImg(imageSrc){
     const image = await fetch(imageSrc);
     const imageBlog=await image.blob();
     const imageURL=URL.createObjectURL(imageBlog);
-
+   
+    alert("el archivo ya se desacrgo con exito");
     const link=document.createElement('a');
     link.href=imageURL;
     link.download="prueba";
