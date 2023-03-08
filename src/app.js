@@ -10,7 +10,7 @@ const app=express();
 
 app.use(fileUpload());
 app.use(session({
-	secret: 'secret',
+	secret: " ",
 	resave: true,
 	saveUninitialized: true
 }));
