@@ -117,7 +117,7 @@ app.get("/collections",async (req,res)=>{
          }
          
     }else{
-        res.redirect("/");
+        res.redirect("/home");
     }
 })
 
@@ -165,7 +165,7 @@ app.get("/save/:img", async(req,res)=>{
       res.redirect("/home");
      }
 
-     res.end();
+    
 })
 //save my collection
 app.get("/logout",(req,res)=>{
