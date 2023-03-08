@@ -1,21 +1,26 @@
 const express =require('express');
 const session=require('express-session');
-const fileUpload = require('express-fileupload');
-const {createClient}=require('pexels');
+//la api de pexels
 
+
+const {createClient}=require('pexels');
 const path = require("path");
 const {queryPromise1}=require('./data/conectionDB.js');
 const app=express();
 
 
-app.use(fileUpload());
-const oneDay = 1000 * 60 * 60 * 24;
+//uso de la session
 app.use(session({
 	secret: "secret",
-  cookie: { maxAge:  oneDay},
-	resave: true,
-	saveUninitialized: true
+  resave: false,
+	saveUninitialized: false,
+  cookie: {
+    secure:true,
+    sameSite:'none'
+  }
 }));
+
+
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
@@ -95,8 +100,9 @@ app.post('/reg',async (req,res)=>{
 
 //user home
 app.get('/home',(req,res)=>{
+       console.log(req.session.loggin)
       if(req.session.loggin){
-        res.render('welcome',{title:"home",iduser:req.session.iduser})
+        res.render('welcome',{title:"home"})
       }else{
          res.redirect('/');
       }
@@ -104,9 +110,9 @@ app.get('/home',(req,res)=>{
 
 
 //about collections
-app.get("/collections/:iduser",async (req,res)=>{
+app.get("/collections",async (req,res)=>{
         try {
-            let sql="select * from  user where id="+req.params.iduser;
+            let sql="select * from  user where account="+req.session.idAccount;
             const result=await queryPromise1(sql);
     
             let sql2="select * from collections  where users="+result[0].id;
