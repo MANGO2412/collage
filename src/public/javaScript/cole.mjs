@@ -3,7 +3,7 @@ const down=document.querySelector(".downl"),
       imgData=document.querySelector(".picture");
 
 
- //event to download     
+ //event to downloadgin      
 down.addEventListener("click",()=>{
       downloadImg(imgData.src);
 })
