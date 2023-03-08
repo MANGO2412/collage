@@ -96,7 +96,7 @@ app.post('/reg',async (req,res)=>{
 //user home
 app.get('/home',(req,res)=>{
       if(req.session.loggin){
-        res.render('welcome',{title:"home"})
+        res.render('welcome',{title:"home",iduser:req.session.iduser})
       }else{
          res.redirect('/');
       }
@@ -104,9 +104,9 @@ app.get('/home',(req,res)=>{
 
 
 //about collections
-app.get("/collections",async (req,res)=>{
+app.get("/collections/:iduser",async (req,res)=>{
         try {
-            let sql="select * from  user where account="+req.session.idAccount;
+            let sql="select * from  user where id="+req.params.iduser;
             const result=await queryPromise1(sql);
     
             let sql2="select * from collections  where users="+result[0].id;
