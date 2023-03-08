@@ -104,7 +104,6 @@ app.get('/home',async (req,res)=>{
 
 //about collections
 app.get("/collections",async (req,res)=>{
-    if(req.session.loggin){
         try {
             let sql="select * from  user where account="+req.session.idAccount;
             const result=await queryPromise1(sql);
@@ -115,10 +114,6 @@ app.get("/collections",async (req,res)=>{
          } catch (error) {
             console.log(error);
          }
-         
-    }else{
-        res.redirect("/home");
-    }
 })
 
 //see image by id
