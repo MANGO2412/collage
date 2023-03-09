@@ -1,5 +1,6 @@
 const express =require('express');
 const session=require('express-session');
+const bodyParser=require('body-parser')
 //la api de pexels
 
 
@@ -10,20 +11,22 @@ const app=express();
 
 
 //uso de la session
-app.use(session({
-	secret: "secret",
-  resave: false,
-	saveUninitialized: false,
-  cookie: {
-    secure:true,
-    sameSite:'none'
-  }
-}));
+var sess = {
+  secret: 'keyboard cat',
+  resave:true,
+  saveUninitialized:true,
+  cookie: {}
+}
+
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1) // trust first proxy
+  sess.cookie.secure = true // serve secure cookies
+}
+app.use(session(sess))
 
 
-
-app.use(express.json())
-app.use(express.urlencoded({extended:true}))
+app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname,'/public')));
 app.set("views",path.join(__dirname,'/views'));
 app.set('view engine','ejs');
@@ -39,7 +42,7 @@ app.get("/register",(req,res)=>{
 })
 
 //start sesion
-app.post('/auth',async (req,res)=>{
+app.post('/auth',async (req,res,next)=>{
    let correo=req.body.correo;
    let password=req.body.password;
   if(correo && password){
@@ -48,7 +51,7 @@ app.post('/auth',async (req,res)=>{
         const result = await queryPromise1(sql);
 
         if(result.length > 0){
-          let sql="select * from  user where account="+result[0].id;
+          sql="select * from  user where account="+result[0].id;
           const user=await queryPromise1(sql);
 
           req.session.loggin=true;
@@ -75,32 +78,26 @@ app.get("/",(req,res)=>{
  
 })
 //start register an 
-app.post('/reg',async (req,res)=>{
+app.post('/reg',async (req,res,next)=>{
     let username=req.body.username;
     let correo=req.body.correo;
     let password=req.body.password;
     
     if(username && correo && password){
-        try {
-            let sql='insert into account(correo,password) values("'+correo+'","'+password+'")';
-            const result=await queryPromise1(sql);
-            try {
-               sql=`insert into user(username,date_create,account) values("${username}",now(),${result.insertId})`;
-               const user= await queryPromise1(sql);
-               req.session.message="inicia sesion para usar la plataforma";
-               res.redirect('/login');
-            } catch (error) {
-                 console.log(error);
-            }
-        } catch (error) {   
-         console.log(error)
-        }
+       try {
+        let sql='insert into account(correo,password) values("'+correo+'","'+password+'")';
+        const result=await queryPromise1(sql); 
+        let sql2=`insert user(username,date_create,account) values("${username}",now(),${result.insertId})`;
+        const user=await queryPromise1(sql2);
+        req.session.message="tu cuenta se registro con exito";
+        res.redirect("/login");
+
+       } catch (error) {console.log(error)}
     }
 })
 
 //user home
 app.get('/home',(req,res)=>{
-       console.log(req.session.loggin)
       if(req.session.loggin){
         res.render('welcome',{title:"home"})
       }else{
